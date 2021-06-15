@@ -1,0 +1,52 @@
+name: SYNCp50
+env:
+  # Username/email used to commit to Cloud Manager's Git repository
+  USER_NAME: AKumarSingh
+  USER_EMAIL: abhisin@adobe.com
+  # Directory within the Cloud Manager Git repository
+  PROJECT_DIR: aem-core-cif-components
+  # Cloud Manager's Git repository
+  MAIN_REPOSITORY: https://$MAIN_USER:$MAIN_PASSWORD@git.cloudmanager.adobe.com/demosystem/AdobeDemoSystemProgram50-p25320/
+  # The branch in Cloud Manager's Git repository to push to
+  MAIN_BRANCH : 2.0.0-ee-subtree-cif-comp
+
+# Only run on a push to this branch
+on:
+  push:
+     branches: [ development-cif ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout this project into a sub folder
+      - uses: actions/checkout@v2
+        with:
+          path: sub
+      # Cleanup sub project
+      - name: Clean project
+        run: |
+          git -C sub log --format="%an : %s" -n 1 > commit.txt
+          rm -rf sub/.git
+          rm -rf sub/.github
+      # Set global git configuration
+      - name: Set git config
+        run: |
+          git config --global credential.helper cache
+          git config --global user.email ${USER_EMAIL}
+          git config --global user.name ${USER_NAME}
+      # Checkout the main project
+      - name: Checkout main project
+        run:
+          git clone -b ${MAIN_BRANCH} https://${{ secrets.PAT }}@github.com/${MAIN_REPOSITORY}.git main
+      # Move sub project
+      - name: Move project to main project
+        run: |
+          rm -rf main/${PROJECT_DIR}
+          mv sub main/${PROJECT_DIR}
+      - name: Commit Changes
+        run: |
+          git -C main add -f ${PROJECT_DIR}
+          git -C main commit -F ../commit.txt
+          git -C main push
