@@ -44,7 +44,7 @@
         <module>ui.apps</module>
         <module>ui.config</module>
         <module>bundles/core</module>
-        <module>examples</module>
+        
         <module>all</module>
     </modules>
 
@@ -58,7 +58,7 @@
                 </property>
             </activation>
             <modules>
-                <module>it/content</module>
+
                 <module>it/http</module>
                 <module>ui.tests</module>
             </modules>
