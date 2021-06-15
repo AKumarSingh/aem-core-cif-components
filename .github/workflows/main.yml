@@ -6,7 +6,7 @@ env:
   # Directory within the Cloud Manager Git repository
   PROJECT_DIR: aem-core-cif-components
   # Cloud Manager's Git repository
-  MAIN_REPOSITORY: https://$MAIN_USER:$MAIN_PASSWORD@git.cloudmanager.adobe.com/demosystem/AdobeDemoSystemProgram50-p25320/
+  MAIN_REPOSITORY: https://$MAIN_USER:$MAIN_PASSWORD@git.cloudmanager.adobe.com/demosystem/AdobeDemoSystemProgram50-p25320
   # The branch in Cloud Manager's Git repository to push to
   MAIN_BRANCH : 2.0.0-ee-subtree-cif-comp
 
