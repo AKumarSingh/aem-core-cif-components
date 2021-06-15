@@ -14,6 +14,7 @@ env:
 on:
   push:
      branches: [ development-cif ]
+  workflow_dispatch:    
 
 jobs:
   build:
